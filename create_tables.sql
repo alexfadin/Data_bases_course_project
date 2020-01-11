@@ -95,30 +95,14 @@ CREATE TABLE portfolio (
   ALTER TABLE portfolio
   ADD COLUMN employee_position_id INT UNSIGNED NOT NULL
   ;
-  -- 11, 12, 13, 14 СОздаем каталог конечных товаров, где одна и таже подгруппа 
-  -- может входить в несколько групп, а один и тот же продукт в несколько подгрупп.
-  -- группы и подгруппы создаются для облегчения навигации пользователя для ручного  
-  -- внесения записей в таблицу customer_product. 
-  -- Структура каталога скопирована с сайта perekrestok.ru
   
-CREATE TABLE end_products_groups (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  item_name VARCHAR(150) NOT NULL
-  );    
-  
-CREATE TABLE end_product_subgroups (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  subgroup_name VARCHAR(150) NOT NULL
-  );
-
-CREATE TABLE end_products (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  product_name VARCHAR(150) NOT NULL
-  );
-  
+  -- 11. Создаем каталог типов конечных товаров, где в поле address указываем родство каждого элемента с другими элементами этой таблицы.
+  -- Такая запись потребуется исходя из специфики задачи. В таблицу customer_product мы будем по возможности вносить предельно конкретные значения(например, майонез), 
+  -- но если данных недостаточно, тогда в этом же поле мы будем указывать родительское значение(например, соусы). При этом при запросе к базе по категории соусы мы хотим, чтобы нам показались
+  -- записи и для соусов и для майонезов.
+   
 CREATE TABLE catalog (
-  group_id INT UNSIGNED NOT NULL,
-  subgroup_id INT UNSIGNED NOT NULL,
-  end_product_id INT UNSIGNED NOT NULL,
-  PRIMARY KEY (group_id, subgroup_id, end_product_id)
-  );
+  ID INT NOT NULL PRIMARY KEY,
+  Category VARCHAR(50),
+  Address VARCHAR(20)
+);
